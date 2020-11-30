@@ -24,6 +24,16 @@ services:
       - "3336:3306"
     volumes:
       - ./mariadb:/var/lib/mysql
+  phpmyadmin:
+    image: phpmyadmin
+    environment:
+       MYSQL_ROOT_PASSWORD: laravel
+       MYSQL_DATABASE: laravel
+       MYSQL_USER: laravel
+       MYSQL_PASSWORD: laravel
+       MYSQL_HOST: db
+    ports:
+      - 4001:80
   redis:
     image: redis:6
 
