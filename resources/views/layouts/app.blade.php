@@ -33,7 +33,16 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-
+                    <li>
+                        <a class="nav-link" href="/articles"  title="">Article Overview</a>
+                        </li>
+                        @auth()
+                        @if(auth()->user()->isAdmin())
+                            <li>
+                                <a class="nav-link" href="/admin"  title="">Admin Panel</a>
+                            </li>
+                            @endif
+                            @endauth
                     </ul>
 
                     <!-- Right Side Of Navbar -->

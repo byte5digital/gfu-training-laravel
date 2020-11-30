@@ -37,6 +37,9 @@ class User extends Authenticatable
 {
     use Notifiable;
 
+    const ADMIN_TYPE = 'admin';
+    const DEFAULT_TYPE = 'default';
+
     /**
      * The attributes that are mass assignable.
      *
@@ -63,4 +66,22 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+     //relationship call w Article class
+     public function articles()
+     {
+         //this (one user) has many articles
+         return $this->hasMany('App\Article');
+     }
+ 
+     /**
+      * Checks if type of user is admin
+      *
+      * @return bool
+      */
+     public function isAdmin()
+     {
+         return $this->type === self::ADMIN_TYPE;
+ 
+     }
 }

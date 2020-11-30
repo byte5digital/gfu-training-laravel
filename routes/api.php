@@ -16,3 +16,6 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+// ApiResource  will generate only API specific routes (index, store, show, update and destroy)
+Route::ApiResource('/articles', 'ArticleApiController');
