@@ -1,0 +1,29 @@
+version: '3.2'
+services:
+  web:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+      target: debug
+    volumes:
+      - ./:/var/www/html:cached
+      - ./000-default.conf:/etc/apache2/sites-available/000-default.conf
+      - ./php.ini:/usr/local/etc/php/php.ini
+    ports:
+      - "4000:80"
+    environment:
+      XDEBUG_CONFIG: remote_host=host.docker.internal remote_port=9001
+  db:
+    image: mariadb:10.5
+    environment:
+       MYSQL_ROOT_PASSWORD: laravel
+       MYSQL_DATABASE: laravel
+       MYSQL_USER: laravel
+       MYSQL_PASSWORD: laravel
+    ports:
+      - "3336:3306"
+    volumes:
+      - ./mariadb:/var/lib/mysql
+  redis:
+    image: redis:6
+
