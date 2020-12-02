@@ -9,6 +9,11 @@ class GfuController extends Controller
 
     public function index(Request $request)
     {
-        return view('welcome');
+        return view('gfu.welcome');
+    }
+
+    public function apiReponse(Request $request)
+    {
+        return response()->json(['test' => 'Hallo zusammen'], 403);
     }
 }

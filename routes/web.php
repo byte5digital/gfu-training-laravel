@@ -21,3 +21,12 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
     Route::get('/home', 'HomeController@index')->name('home');
     Route::get('/dashboard', 'HomeController@index')->name('home');
 });
+
+Route::prefix('blog')->group(function () {
+    Route::get('/', 'BlogController@index')->name('blog.index');
+    Route::get('/create', 'BlogController@create')->name('blog.create');
+    Route::post('/store', 'BlogController@store')->name('blog.store');
+    Route::post('/update/{blog}', 'BlogController@update')->name('blog.update');
+    Route::post('/destroy/{blog}', 'BlogController@destroy')->name('blog.destroy');
+    Route::get('/show/{blog}', 'BlogController@show')->name('blog.show');
+});
