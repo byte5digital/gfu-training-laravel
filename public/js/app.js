@@ -37562,7 +37562,7 @@ var render = function() {
               blog.blog_user
                 ? _c("div", { staticClass: "card-footer" }, [
                     _vm._v(
-                      "\n            " +
+                      "\n          " +
                         _vm._s(blog.blog_user.username) +
                         "\n        "
                     )

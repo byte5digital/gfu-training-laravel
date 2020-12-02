@@ -13,7 +13,7 @@
             {{ blog.blog_content }}
           </div>
           <div class="card-footer" v-if="blog.blog_user">
-              {{blog.blog_user.username}}
+            {{ blog.blog_user.username }}
           </div>
         </div>
       </div>
