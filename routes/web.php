@@ -11,10 +11,13 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('startpage');
+Route::get('/', 'GfuController@index')->name('startpage');
+
+// Laravel 8 Syntax Route::get('/', [GfuController::class, 'index']);
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::middleware(['auth'])->prefix('admin')->group(function () {
+    Route::get('/home', 'HomeController@index')->name('home');
+    Route::get('/dashboard', 'HomeController@index')->name('home');
+});

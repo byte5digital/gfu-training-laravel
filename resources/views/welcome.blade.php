@@ -81,7 +81,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Welcome to byte5
+                    Welcome to GFU
                 </div>
 
                 <div class="links">
