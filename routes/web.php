@@ -11,7 +11,9 @@
 |
 */
 
-Route::get('/', 'HomeController@index')->name('startpage');
+Route::get('/', function () {
+    return view('welcome');
+})->name('startpage');
 
 Auth::routes();
 
