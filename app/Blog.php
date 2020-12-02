@@ -23,10 +23,25 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Blog whereIsPublished($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Blog whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property int|null $user_id
+ * @method static \Illuminate\Database\Eloquent\Builder|Blog whereUserId($value)
+ * @property-read \App\User|null $user
+ * @property int|null $legacy_user_id
+ * @method static \Illuminate\Database\Eloquent\Builder|Blog whereLegacyUserId($value)
  */
 class Blog extends Model
 {
     protected $casts = [
         'is_published' => 'boolean',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function legacyUser()
+    {
+        return $this->belongsTo(LegacyUser::class, 'legacy_user_id');
+    }
 }

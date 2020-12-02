@@ -12,6 +12,10 @@
             {{$blogEntry->headline}}
         </div>
         <div class="col-2">
+            {{$blogEntry->legacyUser !== null ? $blogEntry->legacyUser->name : "Kein Nutzer"}}
+        </div>
+        @auth
+        <div class="col-2">
             <a class="btn btn-primary" href="{{route('blog.show', $blogEntry)}}">Anzeigen</a>
         </div>
         <div class="col-2">
@@ -20,12 +24,15 @@
                 <button type="submit" class="btn btn-danger">Löschen</button>
             </form>
         </div>
+        @endauth
     </div>
 @endforeach
+@auth
 <div class="row">
     <div class="col-2">
         <a href="{{route('blog.create')}}" class="btn btn-success">Neuer Eintrag</a>
     </div>
 </div>
+@endauth
 </div>
 @endsection

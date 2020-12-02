@@ -24,6 +24,17 @@ services:
       - "3336:3306"
     volumes:
       - ./mariadb:/var/lib/mysql
+  db_secondary:
+    image: mariadb:10.5
+    environment:
+       MYSQL_ROOT_PASSWORD: laravel
+       MYSQL_DATABASE: laravel
+       MYSQL_USER: laravel
+       MYSQL_PASSWORD: laravel
+    ports:
+      - "3337:3306"
+    volumes:
+      - ./mariadb_secondary:/var/lib/mysql
   phpmyadmin:
     image: phpmyadmin
     environment:
@@ -31,7 +42,7 @@ services:
        MYSQL_DATABASE: laravel
        MYSQL_USER: laravel
        MYSQL_PASSWORD: laravel
-       MYSQL_HOST: db
+       MYSQL_HOST: db_secondary
     ports:
       - 4001:80
   redis:

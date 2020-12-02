@@ -32,6 +32,8 @@ use Illuminate\Notifications\Notifiable;
  * @method static \Illuminate\Database\Eloquent\Builder|User whereUpdatedAt($value)
  * @mixin \Eloquent
  * @mixin IdeHelperUser
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Blog[] $blogs
+ * @property-read int|null $blogs_count
  */
 class User extends Authenticatable
 {
@@ -63,4 +65,9 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function blogs()
+    {
+        return $this->hasMany(Blog::class, 'user_id');
+    }
 }

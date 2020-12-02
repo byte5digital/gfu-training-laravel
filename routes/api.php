@@ -18,3 +18,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('/test', 'GfuController@apiReponse')->name('api.test');
+
+Route::get('/blog', 'ApiController@getAllBlogEntriesWithUser')->name('api.blog.index');
+Route::get('/blog/{blog}', 'GfuController@getUserForBlog')->name('api.blog.user');

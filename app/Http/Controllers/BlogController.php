@@ -3,10 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Blog;
+use App\Contracts\BlogInterface;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class BlogController extends Controller
 {
+
+    private $_blogService;
+
+    public function __construct(BlogInterface $blogService)
+    {
+        $this->_blogService = $blogService;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +24,7 @@ class BlogController extends Controller
      */
     public function index()
     {
-        $blogEntries = Blog::all();
+        $blogEntries = $this->_blogService->getAllBlogEntries();
         return view('blog.index', ['blogEntries' => $blogEntries]);
     }
 
@@ -36,9 +46,11 @@ class BlogController extends Controller
      */
     public function store(Request $request)
     {
+        $user = Auth::User();
         $newBlog = new Blog();
         $newBlog->headline = $request->post('headline');
         $newBlog->content = $request->post('content');
+        $newBlog->user_id = $user->id;
         $newBlog->save();
         return $this->index();
     }
@@ -74,8 +86,10 @@ class BlogController extends Controller
      */
     public function update(Request $request, Blog $blog)
     {
+        $user = Auth::User();
         $blog->content = $request->post('content');
         $blog->headline = $request->post('headline');
+        $blog->user_id = $user->id;
         $blog->save();
         return $this->index();
     }
