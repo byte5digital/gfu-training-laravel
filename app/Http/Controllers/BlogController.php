@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Blog;
+use App\Category;
 use App\Contracts\BlogInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -35,7 +36,8 @@ class BlogController extends Controller
      */
     public function create()
     {
-        return view('blog.create');
+        $categories = Category::all();
+        return view('blog.create', compact('categories'));
     }
 
     /**
@@ -52,6 +54,11 @@ class BlogController extends Controller
         $newBlog->content = $request->post('content');
         $newBlog->user_id = $user->id;
         $newBlog->save();
+
+        if(request()->has('categories')){
+            $newBlog->categories()->attach(request('categories'));
+        }
+
         return $this->index();
     }
 

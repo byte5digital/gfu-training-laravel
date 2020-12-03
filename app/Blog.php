@@ -28,6 +28,9 @@ use Illuminate\Database\Eloquent\Model;
  * @property-read \App\User|null $user
  * @property int|null $legacy_user_id
  * @method static \Illuminate\Database\Eloquent\Builder|Blog whereLegacyUserId($value)
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Category[] $category
+ * @property-read int|null $category_count
+ * @property-read \App\LegacyUser|null $legacyUser
  */
 class Blog extends Model
 {
@@ -43,5 +46,10 @@ class Blog extends Model
     public function legacyUser()
     {
         return $this->belongsTo(LegacyUser::class, 'legacy_user_id');
+    }
+
+    // relationship call with Category
+    public function categories(){
+        return $this->belongsToMany('App\Category');
     }
 }

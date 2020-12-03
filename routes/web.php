@@ -42,3 +42,13 @@ Route::get('/admin', function(){
 
 Route::get('user/edit', 'UserController@edit')->name('user.edit');
 Route::put('user', 'UserController@update')->name('user.update');
+
+
+
+Route::middleware(['auth'])->prefix('category')->group(function () {
+    Route::get('/', 'CategoryController@index')->name('category.index');
+    Route::get('category/{category}', 'CategoryController@show')->name('category.show');
+    Route::get('/create', 'CategoryController@create')->name('category.create');
+    Route::post('/store', 'CategoryController@store')->name('category.store');
+    Route::delete('category/{category}', 'CategoryController@destroy')->name('category.destroy');
+});

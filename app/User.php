@@ -34,6 +34,8 @@ use Illuminate\Notifications\Notifiable;
  * @mixin IdeHelperUser
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Blog[] $blogs
  * @property-read int|null $blogs_count
+ * @property string $type
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereType($value)
  */
 class User extends Authenticatable
 {
