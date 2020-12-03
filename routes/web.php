@@ -17,8 +17,9 @@ Route::get('/', 'GfuController@index')->name('startpage');
 
 Auth::routes();
 
+Route::get('/home', 'HomeController@index')->name('home');
+
 Route::middleware(['auth'])->prefix('admin')->group(function () {
-    Route::get('/home', 'HomeController@index')->name('home');
     Route::get('/dashboard', 'HomeController@index')->name('home');
 });
 
@@ -30,3 +31,8 @@ Route::prefix('blog')->group(function () {
     Route::post('/destroy/{blog}', 'BlogController@destroy')->name('blog.destroy');
     Route::get('/show/{blog}', 'BlogController@show')->name('blog.show');
 });
+
+Route::get('/admin', function(){
+    return view('admin.index');
+})->middleware(['auth', 'is_admin'])
+->name('admin.index');

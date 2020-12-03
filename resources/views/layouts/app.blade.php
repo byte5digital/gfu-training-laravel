@@ -43,6 +43,13 @@
                     <li class="nav-item">
                                 <a class="nav-link" href="{{ route('blog.index') }}">{{ __('gfu.blog') }}</a>
                             </li>
+                           @auth
+                            @if(auth()->user()->isAdmin())
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('admin.index') }}">Admin Panel</a>
+                            </li>
+                            @endif
+                            @endauth
                         <!-- Authentication Links -->
                         @guest
                             <li class="nav-item">
