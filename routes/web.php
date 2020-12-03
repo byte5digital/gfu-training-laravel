@@ -32,7 +32,13 @@ Route::prefix('blog')->group(function () {
     Route::get('/show/{blog}', 'BlogController@show')->name('blog.show');
 });
 
+// Generates all routes for resource Controller -> see routes with php artisan route:list
+// Route::resource('blog', 'BlogController');
+
 Route::get('/admin', function(){
     return view('admin.index');
 })->middleware(['auth', 'is_admin'])
 ->name('admin.index');
+
+Route::get('user/edit', 'UserController@edit');
+Route::put('user', 'UserController@update')->name('user.update');

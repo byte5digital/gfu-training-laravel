@@ -2,9 +2,17 @@
 
 @section('content')
 <div class="container">
+
+{{-- If Session has status display div with status --}}
+ @if (session('status'))
+     <div class="alert alert-success" role="alert">
+      {{ session('status') }}
+     </div>
+ @endif
+
 <h1>Update User</h1>
 
-<form method="POST" action="{{route('user.update',$user->id)}}">
+<form method="POST" action="{{route('user.update')}}/">
                 <div class="form-group">
                 <!-- Cross-Site-Request-Forgery -->
                 @csrf
