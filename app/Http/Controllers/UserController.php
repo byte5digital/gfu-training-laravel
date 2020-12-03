@@ -16,9 +16,18 @@ class UserController extends Controller
     public function update(Request $request){
         $user = User::findOrFail(auth()->user()->id);
 
+        $this->validateUser();
+
         $user->name = request('name');
         $user->save();
 
-        return redirect(route('user.update'))->with('status', 'Success!');
+        return redirect(route('user.edit'))->with('status', 'Success!');
+    }
+
+    public function validateUser(){
+
+        return request()->validate([
+            'name' => ['required', 'string', 'min:3']
+        ]);
     }
 }

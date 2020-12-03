@@ -40,5 +40,5 @@ Route::get('/admin', function(){
 })->middleware(['auth', 'is_admin'])
 ->name('admin.index');
 
-Route::get('user/edit', 'UserController@edit');
+Route::get('user/edit', 'UserController@edit')->name('user.edit');
 Route::put('user', 'UserController@update')->name('user.update');

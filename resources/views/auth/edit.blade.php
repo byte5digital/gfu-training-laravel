@@ -12,7 +12,7 @@
 
 <h1>Update User</h1>
 
-<form method="POST" action="{{route('user.update')}}/">
+<form method="POST" action="{{route('user.update')}}">
                 <div class="form-group">
                 <!-- Cross-Site-Request-Forgery -->
                 @csrf
