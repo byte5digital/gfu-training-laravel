@@ -17,6 +17,6 @@ Route::get('/home', function(){
     return view('home');
 })->name('homepage');
 
-Route::get('/articles', 'ArticleController@index');
+Route::get('/articles', 'ArticleController@index')->name('articles.index');
 Route::get('/articles/create', 'ArticleController@create')->name('article.create');
 Route::post('/articles', 'ArticleController@store')->name('article.store');

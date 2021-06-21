@@ -25,8 +25,20 @@ class ArticleController extends Controller
     // Create new Article + Store in DB
     public function store()
     {
+        $this->validateArticle();
+
         $article = new Article(request(['title', 'excerpt', 'text']));
         $article->save();
-        return redirect('/articles');
+        return redirect(route('articles.index'))->with('status', 'Article created successfully');
+    }
+
+    // validates Article
+    public function validateArticle()
+    {
+        return request()->validate([
+            'title' => ['required', 'min:5'],
+            'excerpt' => 'required',
+            'text' => 'required',
+        ]);
     }
 }
