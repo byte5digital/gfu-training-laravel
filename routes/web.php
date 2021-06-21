@@ -11,7 +11,9 @@
 |
 */
 
-
+Route::get('/', function(){
+    return view('welcome');
+});
 
 Route::get('/articles', 'ArticleController@index')->name('articles.index');
 Route::get('/articles/create', 'ArticleController@create')->name('article.create');
@@ -20,9 +22,6 @@ Route::get('/article/{article}', 'ArticleController@show')->name('article.show')
 Route::get('/article/edit/{article}', 'ArticleController@edit')->name('article.edit');
 Route::put('/article/{id}', 'ArticleController@update')->name('article.update');
 Route::delete('/article/{article}', 'ArticleController@destroy')->name('article.destroy');
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
 
 Auth::routes();
 
