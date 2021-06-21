@@ -7,9 +7,12 @@ use Illuminate\Http\Request;
 
 class ArticleController extends Controller
 {
+    // Display list of all articles
     public function index()
     {
-        return view('articles.index');
+        $articles = Article::all()->sortByDesc('created_at');
+
+        return view('articles.index', compact('articles'));
     }
 
 

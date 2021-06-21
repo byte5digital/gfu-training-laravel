@@ -65,7 +65,7 @@
     </head>
     <body>
        <h1>Create new Article</h1>
-       <form method="POST" action="{{ route('article.create')}}">
+       <form method="POST" action="{{ route('article.store')}}">
      @csrf
   <div class="form-group row">
     

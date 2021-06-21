@@ -65,5 +65,14 @@
     </head>
     <body>
        <h1>Blog Articles Overview</h1>
+       <a class="btn btn-primary" href="{{ route('article.create')}}" role="button">Link</a>
+       <ol>
+       @foreach ($articles as $article)
+           <li>
+           <h3>{{$article->title}}</h3>
+           <p>{{$article->excerpt}}</p>
+           </li>
+       @endforeach
+       </ol>
     </body>
 </html>
