@@ -20,3 +20,6 @@ Route::get('/home', function(){
 Route::get('/articles', 'ArticleController@index')->name('articles.index');
 Route::get('/articles/create', 'ArticleController@create')->name('article.create');
 Route::post('/articles', 'ArticleController@store')->name('article.store');
+Route::get('/article/{article}', 'ArticleController@show')->name('article.show');
+Route::get('/article/edit/{article}', 'ArticleController@edit')->name('article.edit');
+Route::put('/article/{id}', 'ArticleController@update')->name('article.update');

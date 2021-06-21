@@ -32,6 +32,35 @@ class ArticleController extends Controller
         return redirect(route('articles.index'))->with('status', 'Article created successfully');
     }
 
+    // display one article 
+    public function show(Article $article)
+    {
+        return view('articles.show', ['article'=> $article]);
+    }
+
+    // return view for editing article
+    public function edit(Article $article){
+
+        return view('articles.edit', ['article'=> $article]);
+    }
+
+    // get article by id and update with data from request
+    public function update($id){
+
+        $article = Article::findOrFail($id);
+
+        $this->validateArticle();
+
+        $article->title=request('title');
+        $article->excerpt=request('excerpt');
+        $article->text=request('text');
+
+        $article->save();
+
+        return redirect(route('article.show', $id));
+
+    }
+
     // validates Article
     public function validateArticle()
     {

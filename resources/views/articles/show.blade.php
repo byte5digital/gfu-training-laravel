@@ -65,23 +65,9 @@
     </head>
     <body>
 
-@if (session('status'))
-<p>{{session('status')}}</p>
-    
-@endif
+       <h1>Blog Article - {{$article->title}}</h1>
+       <p>{{$article->text}}</p>
 
-       <h1>Blog Articles Overview</h1>
-       <a class="btn btn-primary" href="{{ route('article.create')}}" role="button">New Article</a>
-       <ol>
-       @foreach ($articles as $article)
-           <li>
-           
-           <h3><a href="{{route('article.show', $article->id)}}">{{$article->title}} - {{$article->created_at->diffForHumans()}}</a></h3>
-           <p>{{$article->excerpt}}</p>
-           
-       <a class="btn btn-primary" href="{{ route('article.edit', $article->id)}}" role="button">Edit</a>
-           </li>
-       @endforeach
-       </ol>
+ <a class="btn btn-primary" href="{{ route('articles.index')}}" role="button">Zurück</a>
     </body>
 </html>
