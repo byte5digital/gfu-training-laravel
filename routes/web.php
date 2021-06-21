@@ -13,6 +13,3 @@
 
 Route::get('/', 'HomeController@index')->name('startpage');
 
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
