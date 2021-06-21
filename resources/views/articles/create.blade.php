@@ -64,38 +64,33 @@
         </style>
     </head>
     <body>
-        <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @auth
-                        <a href="{{ url('/home') }}">Home</a>
-                    @else
-                        <a href="{{ route('login') }}">Login</a>
-
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}">Register</a>
-                        @endif
-                    @endauth
-                </div>
-            @endif
-
-            <div class="content">
-                <div class="title m-b-md">
-                    Laravel
-                </div>
-
-                <div class="links">
-                    <a href="https://laravel.com/docs">Docs</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://blog.laravel.com">Blog</a>
-                    <a href="https://nova.laravel.com">Nova</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://vapor.laravel.com">Vapor</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
-                    <a href="{{ route('homepage') }}">Home</a>
-                </div>
-            </div>
-        </div>
+       <h1>Create new Article</h1>
+       <form method="POST" action="{{ route('article.create')}}">
+     @csrf
+  <div class="form-group row">
+    
+    <label for="title" class="col-4 col-form-label">Title</label> 
+    <div class="col-8">
+      <input id="title" name="title" type="text" class="form-control">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="excerpt" class="col-4 col-form-label">Excerpt</label> 
+    <div class="col-8">
+      <textarea id="excerpt" name="excerpt" cols="40" rows="5" class="form-control"></textarea>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="text" class="col-4 col-form-label">Text</label> 
+    <div class="col-8">
+      <textarea id="text" name="text" cols="40" rows="5" class="form-control"></textarea>
+    </div>
+  </div> 
+  <div class="form-group row">
+    <div class="offset-4 col-8">
+      <button name="submit" type="submit" class="btn btn-primary">Submit</button>
+    </div>
+  </div>
+</form>
     </body>
 </html>

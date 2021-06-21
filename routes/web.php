@@ -13,3 +13,10 @@
 
 Route::get('/', 'HomeController@index')->name('startpage');
 
+Route::get('/home', function(){
+    return view('home');
+})->name('homepage');
+
+Route::get('/articles', 'ArticleController@index');
+Route::get('/articles/create', 'ArticleController@create');
+Route::post('/articles', 'ArticleController@store')->name('article.create');
