@@ -23,3 +23,7 @@ Route::delete('/article/{article}', 'ArticleController@destroy')->name('article.
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
