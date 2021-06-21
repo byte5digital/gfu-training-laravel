@@ -80,6 +80,11 @@
            <p>{{$article->excerpt}}</p>
            
        <a class="btn btn-primary" href="{{ route('article.edit', $article->id)}}" role="button">Edit</a>
+       <form method="POST" action="{{route('article.destroy', $article)}}">
+       @method('DELETE')
+       @csrf
+       <button type="submit">Löschen</button>
+       </form>
            </li>
        @endforeach
        </ol>

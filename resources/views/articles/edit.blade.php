@@ -91,7 +91,7 @@
   <div class="form-group row">
     <label for="text" class="col-4 col-form-label">Text</label> 
     <div class="col-8">
-      <textarea id="text" name="text" cols="40" rows="5" class="form-control">{{old('text', $article->text)}}</textarea>
+      <textarea id="text" name="text" cols="40" rows="5" class="form-control">{{old('text', )$article->text}}</textarea>
          @error('text')
       <p>{{$errors->first('text')}}</p>
       @enderror

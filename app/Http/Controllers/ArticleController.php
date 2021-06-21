@@ -32,7 +32,7 @@ class ArticleController extends Controller
         return redirect(route('articles.index'))->with('status', 'Article created successfully');
     }
 
-    // display one article 
+    // display one article
     public function show(Article $article)
     {
         return view('articles.show', ['article'=> $article]);
@@ -58,6 +58,14 @@ class ArticleController extends Controller
         $article->save();
 
         return redirect(route('article.show', $id));
+
+    }
+
+    //delete article from DB
+    public function destroy(Article $article){
+
+        $article->delete();
+        return response()->redirectTo(route('articles.index'));
 
     }
 
