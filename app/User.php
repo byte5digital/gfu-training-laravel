@@ -77,4 +77,9 @@ class User extends Authenticatable
         //fetches articles for user
         return $this->hasMany(Article::class);
     }
+
+    //checks if current user is admin
+    public function isAdmin(){
+        return $this->type === self::ADMIN_TYPE;
+    }
 }

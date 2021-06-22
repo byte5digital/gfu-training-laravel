@@ -29,7 +29,7 @@ Route::middleware('auth')->group(
 );
 
 // reosurce Routes -> see list of routes with php artisan routes:list
-Route::resource('category', 'CategoryController');
+Route::resource('category', 'CategoryController')->middleware('is_admin');
 
 Auth::routes();
 
