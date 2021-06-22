@@ -24,6 +24,7 @@ Route::middleware('auth')->group(
         Route::get('/article/edit/{article}', 'ArticleController@edit')->name('article.edit');
         Route::put('/article/{id}', 'ArticleController@update')->name('article.update');
         Route::delete('/article/{article}', 'ArticleController@destroy')->name('article.destroy');
+        Route::get('article/category/{category}', 'ArticleController@indexCategorized')->name('articles.categorized');
     }
 );
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Article;
+use App\Category;
 use Illuminate\Http\Request;
 
 class ArticleController extends Controller
@@ -19,11 +20,25 @@ class ArticleController extends Controller
         return view('articles.index', compact('articles'));
     }
 
+    public function indexCategorized(Category $category){
+
+        //get articles where category = requested category
+        $categorizedArticles = Category::where('id', $category->id)->firstOrFail();
+
+        //paginate results
+        $articles = $categorizedArticles->articles()->paginate(5);
+
+        //return view and parse articles
+        return view('articles.index', compact('articles'));
+
+    }
 
     // Return form for Article creation
     public function create()
     {
-        return view('articles.create');
+        $categories = Category::all();
+
+        return view('articles.create', compact('categories'));
     }
 
     // Create new Article + Store in DB
@@ -36,6 +51,12 @@ class ArticleController extends Controller
         $article->user_id = auth()->id();
 
         $article->save();
+
+        if (request()->has('categories')) {
+            //attach category after saving article to db
+            $article->categories()->attach(request('categories'));
+        }
+
         return redirect(route('articles.index'))->with('status', 'Article created successfully');
     }
 
@@ -49,7 +70,11 @@ class ArticleController extends Controller
     public function edit(Article $article)
     {
         if ($article->user_id == auth()->id()) {
-            return view('articles.edit', ['article'=> $article]);
+            $categories = Category::all();
+
+            $attachedCategories = $article->categories()->get();
+
+            return view('articles.edit', ['article'=> $article, 'categories'=>$categories, 'attachedCategories'=>$attachedCategories]);
         } else {
             return redirect(route('articles.index'))->with('status', 'Access denied');
         }
@@ -67,6 +92,8 @@ class ArticleController extends Controller
         $article->text=request('text');
 
         $article->save();
+
+        $article->categories()->sync(request('categories'));
 
         return redirect(route('article.show', $id));
     }
