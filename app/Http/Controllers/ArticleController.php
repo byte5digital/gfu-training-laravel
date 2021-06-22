@@ -14,14 +14,17 @@ class ArticleController extends Controller
         //eager loading
         $articles = Article::with('user')->orderByDesc('created_at')->paginate(5);
 
+        $categories = Category::all();
+
         //lazy loading
         //$articles = Article::all()->sortByDesc('created_at');
 
-        return view('articles.index', compact('articles'));
+        return view('articles.index', ['articles'=>$articles, 'categories' => $categories]);
     }
 
     public function indexCategorized(Category $category){
 
+        $categories = Category::all();
         //get articles where category = requested category
         $categorizedArticles = Category::where('id', $category->id)->firstOrFail();
 
@@ -29,7 +32,7 @@ class ArticleController extends Controller
         $articles = $categorizedArticles->articles()->paginate(5);
 
         //return view and parse articles
-        return view('articles.index', compact('articles'));
+        return view('articles.index', ['articles'=>$articles, 'categories'=>$categories]);
 
     }
 
