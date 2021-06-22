@@ -11,4 +11,11 @@ class Article extends Model
 
     // guarded = which fields are not allowed for mass assigment
     protected $guarded = [];
+
+    //relationship call with User class
+    public function user()
+    {
+        //fetch user for this article
+        return $this->belongsTo(User::class);
+    }
 }
