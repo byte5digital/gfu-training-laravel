@@ -11,7 +11,7 @@ class ArticleController extends Controller
     public function index()
     {
         //eager loading
-        $articles = Article::with('user')->get()->sortByDesc('created_at');
+        $articles = Article::with('user')->orderByDesc('created_at')->paginate(5);
 
         //lazy loading
         //$articles = Article::all()->sortByDesc('created_at');
@@ -46,19 +46,18 @@ class ArticleController extends Controller
     }
 
     // return view for editing article
-    public function edit(Article $article){
-
-        if($article->user_id == auth()->id()){
-
+    public function edit(Article $article)
+    {
+        if ($article->user_id == auth()->id()) {
             return view('articles.edit', ['article'=> $article]);
-        }else{
+        } else {
             return redirect(route('articles.index'))->with('status', 'Access denied');
         }
     }
 
     // get article by id and update with data from request
-    public function update($id){
-
+    public function update($id)
+    {
         $article = Article::findOrFail($id);
 
         $this->validateArticle();
@@ -70,15 +69,13 @@ class ArticleController extends Controller
         $article->save();
 
         return redirect(route('article.show', $id));
-
     }
 
     //delete article from DB
-    public function destroy(Article $article){
-
+    public function destroy(Article $article)
+    {
         $article->delete();
         return response()->redirectTo(route('articles.index'));
-
     }
 
     // validates Article
