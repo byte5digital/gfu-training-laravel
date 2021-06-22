@@ -23,6 +23,7 @@
 
     @endforelse
 
+    <div>{{$categories->links()}}</div>
 
 
 </div>
