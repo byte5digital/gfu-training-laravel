@@ -14,9 +14,13 @@
 
             <h3><a href="{{route('article.show', $article->id)}}">{{$article->title}} -
                     {{$article->created_at->diffForHumans()}}</a></h3>
+                 <p>{{$article->user->name}} ({{$article->user->email}})</p>
             <p>{{$article->excerpt}}</p>
 
+                @if($article->user_id == Auth::id())
             <a class="btn btn-primary" href="{{ route('article.edit', $article->id)}}" role="button">Edit</a>
+@endif
+
             <form method="POST" action="{{route('article.destroy', $article)}}">
                 @method('DELETE')
                 @csrf

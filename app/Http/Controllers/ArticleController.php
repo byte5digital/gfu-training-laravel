@@ -10,7 +10,11 @@ class ArticleController extends Controller
     // Display list of all articles
     public function index()
     {
-        $articles = Article::all()->sortByDesc('created_at');
+        //eager loading
+        $articles = Article::with('user')->get()->sortByDesc('created_at');
+
+        //lazy loading
+        //$articles = Article::all()->sortByDesc('created_at');
 
         return view('articles.index', compact('articles'));
     }
@@ -28,6 +32,9 @@ class ArticleController extends Controller
         $this->validateArticle();
 
         $article = new Article(request(['title', 'excerpt', 'text']));
+
+        $article->user_id = auth()->id();
+
         $article->save();
         return redirect(route('articles.index'))->with('status', 'Article created successfully');
     }
@@ -41,7 +48,12 @@ class ArticleController extends Controller
     // return view for editing article
     public function edit(Article $article){
 
-        return view('articles.edit', ['article'=> $article]);
+        if($article->user_id == auth()->id()){
+
+            return view('articles.edit', ['article'=> $article]);
+        }else{
+            return redirect(route('articles.index'))->with('status', 'Access denied');
+        }
     }
 
     // get article by id and update with data from request
