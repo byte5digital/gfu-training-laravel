@@ -37,7 +37,7 @@ use Illuminate\Notifications\Notifiable;
  * @property string $type
  * @method static \Illuminate\Database\Eloquent\Builder|User whereType($value)
  */
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable;
 

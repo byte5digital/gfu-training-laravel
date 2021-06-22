@@ -29,8 +29,8 @@ Route::middleware('auth')->group(
 );
 
 // reosurce Routes -> see list of routes with php artisan routes:list
-Route::resource('category', 'CategoryController');
+Route::resource('category', 'CategoryController')->middleware(['verified', 'is_admin']);
 
-Auth::routes();
+Auth::routes(['verify' => true]);
 
 Route::get('/home', 'HomeController@index')->name('home');
