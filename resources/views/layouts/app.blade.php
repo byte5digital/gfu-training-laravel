@@ -36,6 +36,7 @@
                         @auth
                         <li class="nav item">
                             <a class="nav-link" href="{{ route('articles.index') }}">Blog</a>
+                            <a class="nav-link" href="{{ route('mail.form') }}">Send Mail</a>
                         </li>
                         @endauth
                     </ul>

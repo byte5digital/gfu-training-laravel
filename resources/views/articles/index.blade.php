@@ -11,35 +11,43 @@
     @endforeach
     <h1>Blog Articles Overview</h1>
     <a class="btn btn-primary" href="{{ route('article.create')}}" role="button">New Article</a>
-    <ol>
-        @foreach ($articles as $article)
-        <li>
+    <br/>
+    <br/>
 
-            <h3><a href="{{route('article.show', $article->id)}}">{{$article->title}} -
-                    {{$article->created_at->diffForHumans()}}</a></h3>
-            <p><b>{{$article->user->first_name}}</b> ( {{$article->user->name}} - {{$article->user->email}})</p>
-
+    @foreach ($articles as $article)
+    <div class="card">
+        <div class="card-body">
             @foreach($article->categories as $articleCategory)
             <a class="badge badge-secondary"
                 href="{{route('articles.categorized', $articleCategory)}}">{{$articleCategory->name}}</a>
             @endforeach
 
-            <p>{{$article->excerpt}}</p>
+            <h5 class="card-title"><a href="{{route('article.show', $article->id)}}">{{$article->title}} -
+                    {{$article->created_at->diffForHumans()}}</a></h5>
+            <p><b>{{$article->user->first_name}}</b> ( {{$article->user->name}} - {{$article->user->email}})</p>
+            <h6 class="card-subtitle mb-2 text-muted">{{$article->excerpt}}</h6>
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
+                content.</p>
+
+
+
 
             @if($article->user_id == Auth::id())
-            <a class="btn btn-primary" href="{{ route('article.edit', $article->id)}}" role="button">Edit</a>
+            <a class="card-link" href="{{ route('article.edit', $article->id)}}" role="button">Edit</a>
             @endif
 
             @if($article->user_id == Auth::id())
             <form method="POST" action="{{route('article.destroy', $article)}}">
                 @method('DELETE')
                 @csrf
-                <button class="btn btn-danger" type="submit">Löschen</button>
+                <button class="card-link" type="submit">Löschen</button>
             </form>
             @endif
-        </li>
-        @endforeach
-    </ol>
+        </div>
+    </div>
+    <br/>
+    @endforeach
+
     <div>{{$articles->links()}}</div>
 </div>
 @endsection
