@@ -4,10 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Article;
 use App\Category;
+use App\Traits\UploadTrait;
+use Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class ArticleController extends Controller
 {
+    use UploadTrait;
+
     // Display list of all articles
     public function index()
     {
@@ -22,8 +27,8 @@ class ArticleController extends Controller
         return view('articles.index', ['articles'=>$articles, 'categories' => $categories]);
     }
 
-    public function indexCategorized(Category $category){
-
+    public function indexCategorized(Category $category)
+    {
         $categories = Category::all();
         //get articles where category = requested category
         $categorizedArticles = Category::where('id', $category->id)->firstOrFail();
@@ -33,7 +38,6 @@ class ArticleController extends Controller
 
         //return view and parse articles
         return view('articles.index', ['articles'=>$articles, 'categories'=>$categories]);
-
     }
 
     // Return form for Article creation
@@ -47,13 +51,32 @@ class ArticleController extends Controller
     // Create new Article + Store in DB
     public function store()
     {
+        //validate Request
         $this->validateArticle();
 
-        $article = new Article(request(['title', 'excerpt', 'text']));
+        //get image file
+        $image = request()->file('image');
 
-        $article->user_id = auth()->id();
+        // make image name based on title + current timestamp
+        $name = Str::slug(request('title')) . '_' . time();
 
-        $article->save();
+        // define folder path
+        $folder = '/img/';
+
+        // create filepath where image will be stored (folder + filename + extension)
+        $filePath = $folder.$name.'.'.$image->getClientOriginalExtension();
+
+        // upload image using uploadOne function from UploadTrait
+        $this->uploadOne($name, $image, 'public', $folder);
+
+        // build request array
+        $requstArray = request()->all();
+
+        // add img_url to request array
+        $requstArray['img_url'] = $filePath;
+
+        // create article from request array
+        $article = $this->createFromArray($requstArray);
 
         if (request()->has('categories')) {
             //attach category after saving article to db
@@ -115,6 +138,19 @@ class ArticleController extends Controller
             'title' => ['required', 'min:5'],
             'excerpt' => 'required',
             'text' => 'required',
+            'image'=> 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
+    }
+
+    public function createFromArray(array $articleProps){
+        $article = new Article();
+        $article->title = $articleProps['title'];
+        $article->excerpt = $articleProps['excerpt'];
+        $article->text = $articleProps['text'];
+        $article->user_id = auth()->id();
+        $article->img_url = $articleProps['img_url'];
+        $article->save();
+
+        return $article;
     }
 }

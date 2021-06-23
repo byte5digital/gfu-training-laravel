@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <h1>Create new Article</h1>
-    <form method="POST" action="{{ route('article.store')}}">
+    <form method="POST" action="{{ route('article.store')}}" enctype="multipart/form-data">
         @csrf
 
         <div class="form-group row">
@@ -32,6 +32,16 @@
                 <textarea id="text" name="text" cols="40" rows="5" class="form-control"></textarea>
                 @error('text')
                 <p class="is-danger">{{$errors->first('text')}}</p>
+                @enderror
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="image" class="col-4 col-form-label">Image</label>
+            <div class="col-8">
+                <input id="image" name="image" type="file" class="form-control" >
+                @error('image')
+                <p class="is-danger">{{$errors->first('image')}}</p>
                 @enderror
             </div>
         </div>
