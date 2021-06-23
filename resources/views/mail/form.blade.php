@@ -2,14 +2,14 @@
 
 @section('content')
 <div class="container">
-    <h1>Create new Article</h1>
+    <h1>Newsletter Signup</h1>
     <form method="POST" action="{{ route('mail.send')}}">
         @csrf
 
         <div class="form-group row">
             <label for="email" class="col-4 col-form-label">Email</label>
-            <input id="email" name="email" type="email" class="form-control">
             <div class="col-8">
+            <input id="email" name="email" type="email" class="form-control">
             </div>
         </div>
 
