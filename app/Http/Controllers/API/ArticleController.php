@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Article;
 use App\Http\Controllers\Controller;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Validator;
 
@@ -41,7 +42,7 @@ class ArticleController extends Controller
         $validator = Validator::make($data, $rules);
 
         //check if validation passes
-        if($validator->passes()){
+        if ($validator->passes()) {
 
             //if validation passes create article and return json with status 200
             $article = Article::create([
@@ -51,18 +52,16 @@ class ArticleController extends Controller
                 ]);
 
 
-                return response()->json([
+            return response()->json([
                     "message" => "Successfully created",
                     "article" => $article
                 ], 200);
-        }else{
+        } else {
             //if validation failed return json with errors and status 422
             return response()->json([
                 "error" => $validator->errors()->all()
             ], 422);
         }
-
-
     }
 
     /**
@@ -73,7 +72,15 @@ class ArticleController extends Controller
      */
     public function show($id)
     {
-        //
+        try {
+            $article = Article::findOrFail($id);
+        } catch (ModelNotFoundException $e) {
+            return response()->json([
+            'messaage' => 'Not found'
+        ], 404);
+        }
+
+        return response()->json($article);
     }
 
     /**
@@ -85,7 +92,47 @@ class ArticleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
+
+                //array of request data
+        $data = request()->all();
+
+        //ruleset
+        $rules = [
+                    'title' => 'sometimes|required|string',
+                    'excerpt' => 'sometimes|required',
+                    'text' => 'sometimes|required',
+                ];
+
+        //create validation
+        $validator = Validator::make($data, $rules);
+
+        //check if validation passes
+        if ($validator->passes()) {
+
+                //check if validation passes
+
+
+            try {
+                $article = Article::findOrFail($id);
+            } catch (ModelNotFoundException $e) {
+                return response()->json([
+                'messaage' => 'Not found'
+            ], 404);
+            }
+
+            $article->update($request->all());
+
+            return response()->json([
+            "message" => "Update successful",
+            "article" => $article,
+        ], 200);
+        } else {
+            //if validation failed return json with errors and status 422
+            return response()->json([
+            "error" => $validator->errors()->all()
+        ], 422);
+        }
     }
 
     /**
@@ -96,6 +143,8 @@ class ArticleController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Article::destroy($id);
+
+        return response()->json('Successfully deleted');
     }
 }
