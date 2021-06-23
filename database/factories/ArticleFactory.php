@@ -3,6 +3,7 @@
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
 use App\Article;
+use App\User;
 use Faker\Generator as Faker;
 
 $factory->define(Article::class, function (Faker $faker) {
@@ -10,5 +11,6 @@ $factory->define(Article::class, function (Faker $faker) {
         'title' => $faker->word,
         'excerpt' => $faker->sentence,
         'text' => $faker->paragraph,
+        'user_id' => factory(User::class),
     ];
 });

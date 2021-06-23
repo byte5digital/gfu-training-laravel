@@ -1,5 +1,7 @@
 <?php
 
+use App\Category;
+use App\Article;
 use Illuminate\Database\Seeder;
 
 class ArticleSeeder extends Seeder
@@ -11,6 +13,15 @@ class ArticleSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Article::class, 100)->create();
+        // generate 15 articles
+        $articles = factory(Article::class, 15)->create();
+
+        //generate 3 categories
+        $categories = factory(Category::class, 3)->create();
+
+        //add all 3 categories to each article
+        foreach($articles as $article){
+            $article->categories()->sync($categories);
+        }
     }
 }
