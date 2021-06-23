@@ -64,6 +64,7 @@ class Kernel extends HttpKernel
 
         //register is_admin middleware
         'is_admin' => \App\Http\Middleware\isAdmin::class,
+        'api_token' => \App\Http\Middleware\validateApiToken::class,
     ];
 
     /**

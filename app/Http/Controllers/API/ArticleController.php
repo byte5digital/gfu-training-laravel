@@ -118,7 +118,7 @@ class ArticleController extends Controller
             ], 404);
             }
 
-            $article->update($request->all());
+            $article->update($request->only('title', 'excerpt', 'text'));
 
             return response()->json([
             "message" => "Update successful",

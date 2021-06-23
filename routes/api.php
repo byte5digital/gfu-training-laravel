@@ -17,4 +17,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::apiResource('/article', 'API\ArticleController');
+Route::apiResource('/article', 'API\ArticleController')->middleware('api_token');
