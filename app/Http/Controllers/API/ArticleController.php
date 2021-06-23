@@ -109,10 +109,7 @@ class ArticleController extends Controller
 
         //check if validation passes
         if ($validator->passes()) {
-
-                //check if validation passes
-
-
+            //check if validation passes
             try {
                 $article = Article::findOrFail($id);
             } catch (ModelNotFoundException $e) {
@@ -143,8 +140,12 @@ class ArticleController extends Controller
      */
     public function destroy($id)
     {
-        Article::destroy($id);
+        $destroy = Article::destroy($id);
 
-        return response()->json('Successfully deleted');
+        if (empty($destroy)) {
+            return response()->json('Not found');
+        } else {
+            return response()->json('Successfully deleted');
+        }
     }
 }
