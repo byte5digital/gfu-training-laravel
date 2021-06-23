@@ -17,7 +17,7 @@
 
             <h3><a href="{{route('article.show', $article->id)}}">{{$article->title}} -
                     {{$article->created_at->diffForHumans()}}</a></h3>
-            <p>{{$article->user->name}} ({{$article->user->email}})</p>
+            <p><b>{{$article->user->first_name}}</b> ( {{$article->user->name}} - {{$article->user->email}})</p>
 
             @foreach($article->categories as $articleCategory)
             <a class="badge badge-secondary"

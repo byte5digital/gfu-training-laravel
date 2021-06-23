@@ -82,4 +82,20 @@ class User extends Authenticatable implements MustVerifyEmail
     public function isAdmin(){
         return $this->type === self::ADMIN_TYPE;
     }
+
+
+    // Accessor
+    // get first name of user
+    // can be accessed via user->fist_name or user->FirstName
+    public function getFirstNameAttribute(){
+        $nameParts = explode(' ', trim($this->name));
+        return $nameParts[0];
+    }
+
+    //Mutator
+    //turns name to lower string whenever attribute is touched (create, update)
+    public function setNameAttribute($value){
+        $this->attributes['name'] = strtolower($value);
+    }
+
 }

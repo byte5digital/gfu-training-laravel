@@ -23,4 +23,5 @@ class Article extends Model
         return $this->belongsToMany(Category::class);
     }
 
+
 }
