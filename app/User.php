@@ -37,6 +37,9 @@ use Illuminate\Notifications\Notifiable;
  * @property-read int|null $blogs_count
  * @property string $type
  * @method static \Illuminate\Database\Eloquent\Builder|User whereType($value)
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Article[] $articles
+ * @property-read int|null $articles_count
+ * @property-read mixed $first_name
  */
 class User extends Authenticatable implements MustVerifyEmail
 {
