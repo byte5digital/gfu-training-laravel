@@ -28,7 +28,8 @@ class TestMail extends Mailable
      */
     public function build()
     {
-        return $this->subject('Test Mail')
+        return $this->from('meinecooleapp@app.de', 'App Newsletter')
+        ->subject('Test Mail')
         ->view('mail.test');
     }
 }
