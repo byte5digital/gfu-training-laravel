@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Notifications\CustomVerifyEmail;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -98,4 +99,14 @@ class User extends Authenticatable implements MustVerifyEmail
         $this->attributes['name'] = strtolower($value);
     }
 
+
+    public function sendEmailVerificationNotification()
+    {
+        // delays notification by one minute
+        // $when = now()->addMinute();
+        // $this->notify((new CustomVerifyEmail)->delay($when));
+
+        // Sends notification instantly
+        $this->notify(new CustomVerifyEmail);
+    }
 }

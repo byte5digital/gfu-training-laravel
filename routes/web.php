@@ -34,3 +34,6 @@ Route::resource('category', 'CategoryController')->middleware(['verified', 'is_a
 Auth::routes(['verify' => true]);
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/mail', 'MailController@showForm')->name('mail.form');
+Route::post('/mail', 'MailController@sendTestMail')->name('mail.send');
