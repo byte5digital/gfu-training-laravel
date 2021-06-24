@@ -26,16 +26,16 @@ Route::middleware('auth')->group(function(){
 
         Route::get('/', [ArticleController::class, 'index'])->name('index');
         Route::post('/', [ArticleController::class, 'store'])->name('store');
-
-        Route::get('create', [ArticleController::class, 'create'])->name('create');
+        Route::get('category/{category}', [ArticleController::class, 'indexCategorized'])->name('categorized');
 
     });
 
     Route::name('article.')->prefix('article')->group(function() {
 
         Route::get('edit/{article}', [ArticleController::class, 'edit'])->name('edit');
+        Route::get('create', [ArticleController::class, 'create'])->name('create');
+
         Route::put('{id}', [ArticleController::class, 'update'])->name('update');
-        Route::get('category/{category}', [ArticleController::class, 'indexCategorized'])->name('categorized');
 
         Route::prefix('{article}')->group(function() {
             Route::get('/', [ArticleController::class, 'show'])->name('show');
