@@ -45,8 +45,8 @@ class User extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable;
 
-    const ADMIN_TYPE = 'admin';
-    const DEFAULT_TYPE = 'default';
+    public const ADMIN_TYPE = 'admin';
+    public const DEFAULT_TYPE = 'default';
 
     /**
      * The attributes that are mass assignable.

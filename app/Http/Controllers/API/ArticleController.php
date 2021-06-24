@@ -39,29 +39,6 @@ class ArticleController extends Controller
             "message" => "Successfully created",
             "article" => $article
         ], 200);
-
-
-        //check if validation passes
-        // if ($validator->passes()) {
-
-        //     //if validation passes create article and return json with status 200
-        //     $article = Article::create([
-        //         'title' => $request->title,
-        //         'excerpt' => $request->excerpt,
-        //         'text' => $request->text,
-        //         ]);
-
-
-        //     return response()->json([
-        //             "message" => "Successfully created",
-        //             "article" => $article
-        //         ], 200);
-        // } else {
-        //     //if validation failed return json with errors and status 422
-        //     return response()->json([
-        //         "error" => $validator->errors()->all()
-        //     ], 422);
-        // }
     }
 
     /**

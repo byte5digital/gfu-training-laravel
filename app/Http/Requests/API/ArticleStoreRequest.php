@@ -2,8 +2,10 @@
 
 namespace App\Http\Requests\API;
 
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
-use Validator;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Validation\ValidationException;
 
 class ArticleStoreRequest extends FormRequest
 {
@@ -31,10 +33,12 @@ class ArticleStoreRequest extends FormRequest
         ];
     }
 
-    // public function failedValidation(Validator $validator)
-    // {
-    //     return response()->json([
-    //         "error" => $validator->errors()->all()
-    //     ], 422);
-    // }
+    public function failedValidation(Validator $validator)
+    {
+        $response = new JsonResponse([
+            'errors' => $validator->errors()->all(),
+        ], 422);
+
+        throw new ValidationException($validator, $response);
+    }
 }
