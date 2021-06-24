@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Article;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\API\ArticleStoreRequest;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Validator;
@@ -26,42 +27,41 @@ class ArticleController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ArticleStoreRequest $request)
     {
-        //array of request data
-        $data = request()->all();
+        $article = Article::create([
+                        'title' => $request->title,
+                        'excerpt' => $request->excerpt,
+                        'text' => $request->text,
+                    ]);
 
-        //ruleset
-        $rules = [
-            'title' => 'required',
-            'excerpt' => 'required',
-            'text' => 'required',
-        ];
+        return response()->json([
+            "message" => "Successfully created",
+            "article" => $article
+        ], 200);
 
-        //create validation
-        $validator = Validator::make($data, $rules);
 
         //check if validation passes
-        if ($validator->passes()) {
+        // if ($validator->passes()) {
 
-            //if validation passes create article and return json with status 200
-            $article = Article::create([
-                'title' => $request->title,
-                'excerpt' => $request->excerpt,
-                'text' => $request->text,
-                ]);
+        //     //if validation passes create article and return json with status 200
+        //     $article = Article::create([
+        //         'title' => $request->title,
+        //         'excerpt' => $request->excerpt,
+        //         'text' => $request->text,
+        //         ]);
 
 
-            return response()->json([
-                    "message" => "Successfully created",
-                    "article" => $article
-                ], 200);
-        } else {
-            //if validation failed return json with errors and status 422
-            return response()->json([
-                "error" => $validator->errors()->all()
-            ], 422);
-        }
+        //     return response()->json([
+        //             "message" => "Successfully created",
+        //             "article" => $article
+        //         ], 200);
+        // } else {
+        //     //if validation failed return json with errors and status 422
+        //     return response()->json([
+        //         "error" => $validator->errors()->all()
+        //     ], 422);
+        // }
     }
 
     /**

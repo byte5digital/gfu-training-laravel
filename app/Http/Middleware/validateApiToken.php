@@ -15,7 +15,7 @@ class validateApiToken
      */
     public function handle($request, Closure $next)
     {
-        if ($request->api_token == env('API_Key')) {
+        if ($request->header('Api-Key') == config('app.API_KEY')) {
             return $next($request);
         } else {
             return response()->json('You shall not pass', 401);
