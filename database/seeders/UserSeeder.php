@@ -18,7 +18,7 @@ class UserSeeder extends Seeder
     {
         User::create([
             'name' => 'John Doe',
-            'email' => 'email@example.com',
+            'email' => 'admin@example.com',
             'email_verified_at' => now(),
             'password' => Hash::make('meinPasswort'),
             'remember_token' => Str::random(10),
