@@ -16,10 +16,10 @@ class ArticleSeeder extends Seeder
     public function run()
     {
         // generate 15 articles
-        $articles = factory(Article::class, 15)->create();
+        $articles = Article::factory()->count(15)->create();
 
         //generate 3 categories
-        $categories = factory(Category::class, 3)->create();
+        $categories = Category::factory()->count(15)->create();
 
         //add all 3 categories to each article
         foreach($articles as $article){

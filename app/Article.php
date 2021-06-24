@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -33,6 +34,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Article extends Model
 {
+    use HasFactory;
     // fillable = which field are allowed for mass assignment
     //protected $fillable = ['title', 'excerpt', 'text'];
 
