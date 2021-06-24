@@ -11,29 +11,47 @@
 |
 */
 
+use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\MailController;
+
 Route::get('/', function(){
     return view('welcome');
 });
 
-Route::middleware('auth')->group(
-    function(){
-        Route::get('/articles', 'ArticleController@index')->name('articles.index');
-        Route::get('/articles/create', 'ArticleController@create')->name('article.create');
-        Route::post('/articles', 'ArticleController@store')->name('article.store');
-        Route::get('/article/{article}', 'ArticleController@show')->name('article.show');
-        Route::get('/article/edit/{article}', 'ArticleController@edit')->name('article.edit');
-        Route::put('/article/{id}', 'ArticleController@update')->name('article.update');
-        Route::delete('/article/{article}', 'ArticleController@destroy')->name('article.destroy');
-        Route::get('article/category/{category}', 'ArticleController@indexCategorized')->name('articles.categorized');
-    }
-);
+Route::middleware('auth')->group(function(){
+
+    Route::name('articles.')->prefix('articles')->group(function() {
+
+        Route::get('/', [ArticleController::class, 'index'])->name('index');
+        Route::post('/', [ArticleController::class, 'store'])->name('store');
+
+        Route::get('create', [ArticleController::class, 'create'])->name('create');
+
+    });
+
+    Route::name('article.')->prefix('article')->group(function() {
+
+        Route::get('edit/{article}', [ArticleController::class, 'edit'])->name('edit');
+        Route::put('{id}', [ArticleController::class, 'update'])->name('update');
+        Route::get('category/{category}', [ArticleController::class, 'indexCategorized'])->name('categorized');
+
+        Route::prefix('{article}')->group(function() {
+            Route::get('/', [ArticleController::class, 'show'])->name('show');
+            Route::delete('/', [ArticleController::class, 'destroy'])->name('destroy');
+        });
+
+    });
+
+});
 
 // reosurce Routes -> see list of routes with php artisan routes:list
-Route::resource('category', 'CategoryController')->middleware(['verified', 'is_admin']);
+Route::resource('category', CategoryController::class)->middleware(['verified', 'is_admin']);
 
 Auth::routes(['verify' => true]);
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-Route::get('/mail', 'MailController@showForm')->name('mail.form');
-Route::post('/mail', 'MailController@sendTestMail')->name('mail.send');
+Route::get('/mail', [MailController::class, 'showForm'])->name('mail.form');
+Route::post('/mail', [MailController::class, 'sendTestMail'])->name('mail.send');

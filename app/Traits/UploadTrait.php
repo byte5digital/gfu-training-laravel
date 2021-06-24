@@ -7,10 +7,12 @@ use Illuminate\Support\Str;
 
 trait UploadTrait
 {
-    public function uploadOne($filename, UploadedFile $uploadedFile, $disk = 'public', $folder)
+    public function uploadOne($filename, UploadedFile $uploadedFile, $folder, $disk = 'public')
     {
         $name = !is_null($filename) ? $filename : Str::random(25);
 
-        return $uploadedFile->storeAs($folder, $name.'.'.$uploadedFile->getClientOriginalExtension(), $disk);
+        $file = $uploadedFile->storeAs($folder, $name.'.'.$uploadedFile->getClientOriginalExtension(), $disk);
+
+        return $file;
     }
 }
