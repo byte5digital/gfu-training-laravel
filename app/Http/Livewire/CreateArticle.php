@@ -11,6 +11,7 @@ class CreateArticle extends Component
     use WithFileUploads;
 
     public $categories;
+    /** @var Article $article */
     public $article;
     public $articleImage;
     public $selectedCategories;
@@ -25,8 +26,7 @@ class CreateArticle extends Component
 
     public function mount()
     {
-        $this->article = new Article();
-        $this->selectedCategories = [];
+        $this->clearFields();
     }
 
     public function render()
@@ -38,5 +38,27 @@ class CreateArticle extends Component
     {
         $this->validate();
 
+        $imagePath = $this
+            ->articleImage
+            ->store('public/article_images');
+        $imagePath = str_replace('public/', '', $imagePath);
+
+        $this->article->user_id = auth()->id();
+        $this->article->img_url = $imagePath;
+        $this->article->save();
+
+        if($this->selectedCategories) {
+            $this->article->categories()->sync($this->selectedCategories);
+        }
+
+        $this->clearFields();
+        $this->emit('articleStored');
+    }
+
+    public function clearFields()
+    {
+        $this->article = new Article();
+        $this->articleImage = null;
+        $this->selectedCategories = [];
     }
 }
