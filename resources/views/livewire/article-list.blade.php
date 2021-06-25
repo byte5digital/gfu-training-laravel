@@ -12,7 +12,13 @@
                     </a>
                 </h5>
                 <p><b>{{$article->user->first_name}}</b> ( {{$article->user->name}} - {{$article->user->email}})</p>
-                <h6 class="card-subtitle mb-2 text-muted">{{$article->excerpt}}</h6>
+                <h6 class="card-subtitle mb-2 text-muted" wire:click="editExcerpt({{$article->id}})">
+                    @if ($editExcerpt === $article->id)
+                        <input type="text" class="form-control" wire:model="editedExcerpt" wire:keydown.enter="saveExcerpt({{ $article->id }})">
+                    @else
+                        {{ $article->excerpt }}
+                    @endif
+                </h6>
 
                 <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
 

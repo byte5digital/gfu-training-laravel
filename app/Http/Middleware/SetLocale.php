@@ -16,7 +16,20 @@ class SetLocale
      */
     public function handle(Request $request, Closure $next)
     {
-        app()->setLocale($request->segment(1));
+        $locales = [
+            'de',
+            'en',
+            'ru',
+        ];
+
+        $givenLocale = $request->segment(2);
+
+        if(!in_array($givenLocale, $locales)) {
+            app()->setlocale('de');
+        } else {
+            app()->setLocale($givenLocale);
+        }
+
         return $next($request);
     }
 }
